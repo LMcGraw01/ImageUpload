@@ -41,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
 //        selectImageButton = findViewById(R.id.selectImageButton);
         // text view goes here
 
+        // recycler view
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // dynamic list of items with assigned text fields
         itemList = new ArrayList<>();
         itemList.add(new Item("Headset", R.mipmap.ic_launcher));
         itemList.add(new Item("Push to talk dongle", R.mipmap.ic_launcher));
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         itemList.add(new Item("Headset", R.mipmap.ic_launcher));
         itemList.add(new Item("USB-C adapter", R.mipmap.ic_launcher));
 
+        // adapter being set to recycler view
         adapter = new ItemAdapter(this, itemList);
         recyclerView.setAdapter(adapter);
     }
