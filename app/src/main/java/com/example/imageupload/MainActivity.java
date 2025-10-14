@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         checklist.add(new Item("Morty joystick", false));
         checklist.add(new Item("Orb", false));
 
+
         // adapter being set to recycler view
         adapter = new ItemAdapter(checklist);
         recyclerView.setAdapter(adapter);
