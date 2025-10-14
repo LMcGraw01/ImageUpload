@@ -52,14 +52,14 @@ public class MainActivity extends AppCompatActivity
         checklist.add(new Item("Headset", false));
         checklist.add(new Item("Push to talk dongle", false));
         checklist.add(new Item("TAK server running", false));
-        checklist.add(new Item("Headset", false));
         checklist.add(new Item("USB-C adapter", false));
         checklist.add(new Item("Bump helmet", false));
         checklist.add(new Item("Ice Cream", false));
         checklist.add(new Item("Morty", false));
         checklist.add(new Item("Morty joystick", false));
         checklist.add(new Item("Orb", false));
-
+        checklist.add(new Item("ASN", false));
+        checklist.add(new Item("Parrot", false));
 
         // adapter being set to recycler view
         adapter = new ItemAdapter(checklist);
