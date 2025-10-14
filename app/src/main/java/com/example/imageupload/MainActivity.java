@@ -22,14 +22,16 @@ import android.widget.Toast;
 // 4. users picks an image
 // 5. image shows up on screen
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     RecyclerView recyclerView;
     ItemAdapter adapter;
     List<Item> itemList;
 
     // override - when the activity starts, run the code to set up the screen
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         // super (oop) (inherit from parent class)
         // run OnCreate() version from AppCompatActivity before running new code
         super.onCreate(savedInstanceState);
@@ -52,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         itemList.add(new Item("TAK server running", R.mipmap.ic_launcher));
         itemList.add(new Item("Headset", R.mipmap.ic_launcher));
         itemList.add(new Item("USB-C adapter", R.mipmap.ic_launcher));
+        itemList.add(new Item("Bump helmet", R.mipmap.ic_launcher));
+        itemList.add(new Item("Ice Cream", R.mipmap.ic_launcher));
+        itemList.add(new Item("Morty", R.mipmap.ic_launcher));
+        itemList.add(new Item("Morty joystick", R.mipmap.ic_launcher));
+        itemList.add(new Item("Orb", R.mipmap.ic_launcher));
 
         // adapter being set to recycler view
         adapter = new ItemAdapter(this, itemList);
