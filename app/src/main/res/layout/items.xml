@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="12dp"
-    android:background="#FF69B4">
+    android:background="#00008B">
 
     <ImageView
         android:id="@+id/item_image"
@@ -17,9 +17,10 @@
         android:id="@+id/item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sample Item"
-        android:textSize="18sp"
-        android:textColor="#000000"
+        android:text="Skybox Checklist"
+        android:textSize="24sp"
+        android:textColor="#808080"
+        android:textStyle="bold"
         android:gravity="center_vertical" />
 
 </LinearLayout>

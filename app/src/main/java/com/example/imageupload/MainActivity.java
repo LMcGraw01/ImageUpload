@@ -3,8 +3,14 @@ package com.example.imageupload;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.imageupload.ui.ItemAdapter;
+import com.example.imageupload.ui.Item;
 import android.net.Uri;
 import android.os.Bundle;
+import java.util.ArrayList;
+import java.util.List;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,21 +23,10 @@ import android.widget.Toast;
 // 5. image shows up on screen
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView imageView;
-    private Button selectImageButton;
+    RecyclerView recyclerView;
+    ItemAdapter adapter;
+    List<Item> itemList;
 
-    // launches the "image upload"
-    private final ActivityResultLauncher<String> pickImage =
-            registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-                if (uri != null) {
-                    // show image in the ImageView
-                    imageView.setImageURI(uri);
-                } else {
-                    // small popup message that appears on screen briefly to show feedback to user
-                    // msg: "no image selected"
-                    Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show();
-                }
-            });
     // override - when the activity starts, run the code to set up the screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +41,17 @@ public class MainActivity extends AppCompatActivity {
 //        selectImageButton = findViewById(R.id.selectImageButton);
         // text view goes here
 
-        // when the button is clicked, open the gallery
-        selectImageButton.setOnClickListener(v -> pickImage.launch("image/*"));
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        itemList = new ArrayList<>();
+        itemList.add(new Item("Headset", R.mipmap.ic_launcher));
+        itemList.add(new Item("Push to talk dongle", R.mipmap.ic_launcher));
+        itemList.add(new Item("TAK server running", R.mipmap.ic_launcher));
+        itemList.add(new Item("Headset", R.mipmap.ic_launcher));
+        itemList.add(new Item("USB-C adapter", R.mipmap.ic_launcher));
+
+        adapter = new ItemAdapter(this, itemList);
+        recyclerView.setAdapter(adapter);
     }
 }
