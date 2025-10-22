@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText" >
 
     <!-- NOTES -->
     <!-- match_parent - make this view as big as the parent allows  -->
@@ -12,11 +13,13 @@
     <!-- access any .txt file and implement scroll bar -->
     <!-- android:scaleType in ImageView -->
 
+    <!-- include the menu bar -->
+    <include layout="@layout/menu_bar" />
+
     <!-- recyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewChecklist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

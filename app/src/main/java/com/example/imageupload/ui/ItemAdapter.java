@@ -1,10 +1,12 @@
 package com.example.imageupload.ui;
 
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -41,23 +43,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         Item item = checklist.get(position);
-        holder.textView.setText(item.getText());
-        holder.checkBox.setChecked(item.isChecked());
-
+        holder.editText.setText(item.getText());
 
         // listener
         holder.checkBox.setOnCheckedChangeListener(null);
-
         // sync checkbox state
         holder.checkBox.setChecked(item.isChecked());
-
         // listen for checkbox changes
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setChecked(isChecked);
         });
 
         // make entire item clickable
-        holder.textView.setOnClickListener(v -> {
+        holder.editText.setOnClickListener(v -> {
             // Toggle the checkbox
             boolean newState = !item.isChecked();
             item.setChecked(newState);
@@ -73,15 +71,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
+        //public Button deleteButton;
         CheckBox checkBox;
-        TextView textView;
-        Button removeButton;
+        EditText editText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox = itemView.findViewById((R.id.checkBox));
-            textView = itemView.findViewById(R.id.item_text);
-            removeButton = itemView.findViewById((R.id.removeButton));
+            editText = itemView.findViewById((R.id.editText));
+            //textView = itemView.findViewById(R.id.item_text);
+            //deleteButton = itemView.findViewById(R.id.action_delete);
         }
     }
 }

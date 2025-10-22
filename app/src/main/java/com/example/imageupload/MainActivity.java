@@ -3,6 +3,7 @@ package com.example.imageupload;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.imageupload.ui.ItemAdapter;
@@ -11,8 +12,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 // User flow
@@ -27,6 +32,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
 {
     RecyclerView recyclerView;
+    Button deleteButton;
+    Button addButton;
     ItemAdapter adapter;
     List<Item> checklist;
 
@@ -51,8 +58,17 @@ public class MainActivity extends AppCompatActivity
 
         // dynamic list of items with assigned text fields
         checklist = new ArrayList<>();
-
-
+        checklist.add(new Item("Headset", false));
+        checklist.add(new Item("Push to talk dongle (PTT)", false));
+        checklist.add(new Item("TAK server running", false));
+        checklist.add(new Item("USB-C adapter", false));
+        checklist.add(new Item("Bump helmet", false));
+        checklist.add(new Item("Ice Cream", false));
+        checklist.add(new Item("Morty", false));
+        checklist.add(new Item("Morty joystick", false));
+        checklist.add(new Item("Orb", false));
+        checklist.add(new Item("ASN", false));
+        checklist.add(new Item("Parrot", false));
         checklist.add(new Item("Headset", false));
         checklist.add(new Item("Push to talk dongle (PTT)", false));
         checklist.add(new Item("TAK server running", false));
@@ -68,5 +84,33 @@ public class MainActivity extends AppCompatActivity
         // adapter being set to recycler view
         adapter = new ItemAdapter(checklist);
         recyclerView.setAdapter(adapter);
+
+        // delete button included in activity layout
+        Button deleteButton = findViewById(R.id.action_delete);
+        deleteButton.setOnClickListener(v -> {
+            // Remove all checked items
+            for (int i = checklist.size() - 1; i >= 0; i--) { // iterate backwards
+                if (checklist.get(i).isChecked()) {
+                    checklist.remove(i);
+                    adapter.notifyItemRemoved(i);
+                }
+            }
+        });
+
+        // add button included in activity layout
+        Button addButton = findViewById(R.id.action_add);
+        addButton.setOnClickListener(v -> {
+            // Create a new item with default text
+            Item newItem = new Item("New Item", false);
+
+            // Add it to the checklist
+            checklist.add(newItem);
+
+            // Notify adapter
+            adapter.notifyItemInserted(checklist.size() - 1);
+
+            // Scroll to the new item
+            recyclerView.scrollToPosition(checklist.size() - 1);
+        });
     }
 }
