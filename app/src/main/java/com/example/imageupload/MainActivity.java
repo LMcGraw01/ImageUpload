@@ -8,13 +8,17 @@ import android.os.Bundle;
 import java.util.ArrayList;
 import java.util.List;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.example.imageupload.model.Item;
+
+import io.objectbox.BoxStore;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -56,10 +60,27 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        // exit button logic
+        Button closeButton = findViewById(R.id.action_close);
+        closeButton.setOnClickListener(v -> {
+            System.exit(0);
+            finish();
+            Toast.makeText(this, "Exiting!", Toast.LENGTH_SHORT).show();
+        });
+
+        // refresh list button logic
+        Button refreshButton = findViewById(R.id.action_refresh);
+        refreshButton.setOnClickListener(v -> {
+            itemRepo.clearAll();
+            Toast.makeText(this, "List synced", Toast.LENGTH_SHORT).show();
+        });
+
         // delete button logic
+        // deleted item removes from the list and the database?? double check
         Button deleteButton = findViewById(R.id.action_delete);
         deleteButton.setOnClickListener(v -> {
-            // Remove all checked items
+            // remove all checked items
             for (int i = items.size() - 1; i >= 0; i--) { // iterate backwards
                 if (items.get(i).isChecked()) {
                     // delete from database
@@ -75,8 +96,12 @@ public class MainActivity extends AppCompatActivity
         // add button logic
         Button addButton = findViewById(R.id.action_add);
         addButton.setOnClickListener(v -> {
+            // save the text placed in the edit text field
+            // once done button is pressed
+            // make sure it saves even when exit is pressed
             // create a new item with default text
-            Item newItem = new Item("New Item", false, 0);
+            Item newItem = new Item("", false, 0);
+            // edit text needs to go into this
 
             // save to database (returns assigned ID)
             long newId = itemRepo.addItem(newItem);
@@ -88,23 +113,6 @@ public class MainActivity extends AppCompatActivity
             recyclerView.scrollToPosition(items.size() - 1);
             Toast.makeText(this, "Item Added!", Toast.LENGTH_SHORT).show();
         });
-
-        Button refreshButton = findViewById(R.id.action_refresh);
-        refreshButton.setOnClickListener(v -> {
-            itemRepo.getAllItems();
-            Toast.makeText(this, "List refreshed!", Toast.LENGTH_SHORT).show();
-        });
-
-        Button closeButton = findViewById(R.id.action_close);
-        closeButton.setOnClickListener(v -> {
-                finish();
-                System.exit(0);
-            Toast.makeText(this, "Exiting!", Toast.LENGTH_SHORT).show();
-        });
-
-
-
-
 
         // sanity check
         Log.d("PCC", "Loaded " + items.size() + " items from DB");

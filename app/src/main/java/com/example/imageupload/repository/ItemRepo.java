@@ -40,6 +40,4 @@ public class ItemRepo {
     public void clearAll() {
         itemBox.removeAll();
     }
-
-    // UPDATE ALL ITEMS
 }

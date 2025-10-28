@@ -10,7 +10,7 @@ public class Item {
     public long id;
     public String text;
     private boolean isChecked;
-    private int priority; // (1, critical...5, low)
+    private int priority;
 
     // no arg constructor for ObjectBox
     public Item(){}
@@ -25,6 +25,10 @@ public class Item {
     public String getText()
     {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public boolean isChecked() {

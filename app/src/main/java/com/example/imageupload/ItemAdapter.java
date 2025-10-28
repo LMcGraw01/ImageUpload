@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -14,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.imageupload.model.Item;
+import com.example.imageupload.repository.ItemRepo;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ import io.objectbox.Box;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<Item> items;
+    private ItemRepo itemRepo;
     private final Context context;
     
     // Spinner options
@@ -65,23 +69,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     {
         Item item = items.get(position);
         holder.editText.setText(item.getText());
-        // listener
-        holder.checkBox.setOnCheckedChangeListener(null);
         // sync checkbox state
-        holder.checkBox.setChecked(item.isChecked());
+        //holder.checkBox.setChecked(item.isChecked());
+
         // listen for checkbox changes
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setChecked(isChecked);
         });
 
-        // make entire item clickable
-        holder.editText.setOnClickListener(v -> {
-            // Toggle the checkbox
-            boolean newState = !item.isChecked();
-            item.setChecked(newState);
-            holder.checkBox.setChecked(newState);
-        });
+        // CREATE AN EDIT TEXT ADAPTER
 
+        // make entire item clickable
+//        holder.editText.setOnClickListener(v -> {
+//            // toggle the checkbox
+//            boolean newState = !item.isChecked();
+//            item.setChecked(newState);
+//            holder.checkBox.setChecked(newState);
+//            itemRepo.updateItem(item);
+//        });
+        // spinner logic
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
             context,
             R.layout.spinner_layout,
@@ -89,15 +95,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     );
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         holder.priority_spinner.setAdapter(spinnerAdapter);
-        // Set current priority
+        // set current priority
         holder.priority_spinner.setSelection(item.getPriority());
-
-        // Handle Spinner changes
+        // handle Spinner changes
         holder.priority_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 item.setPriority(pos); // save new priority to item
-                // Optionally update ObjectBox
+                // update ObjectBox
                 Box<Item> box = MyApp.getBoxStore().boxFor(Item.class);
                 box.put(item);
             }
