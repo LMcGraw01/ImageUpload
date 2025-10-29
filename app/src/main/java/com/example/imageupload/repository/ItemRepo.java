@@ -9,35 +9,31 @@ import io.objectbox.Box;
 
 public class ItemRepo {
 
-    private final Box<Item> itemBox;
+    public final Box<Item> itemRepo;
 
     public ItemRepo() {
-        itemBox = MyApp.getBoxStore().boxFor(Item.class);
+        itemRepo = MyApp.getBoxStore().boxFor(Item.class);
     }
 
     // push / insert item
     // prevent duplicates
     public long addItem(Item item) {
-        return itemBox.put(item);
+        return itemRepo.put(item);
     }
 
     // pull / get all items
     public List<Item> getAllItems() {
-        return itemBox.getAll();
+        return itemRepo.getAll();
     }
 
-    // update item
-    public void updateItem(Item item) {
-        itemBox.put(item);
-    }
 
     // delete item
     public void deleteItem(long id) {
-        itemBox.remove(id);
+        itemRepo.remove(id);
     }
 
     // clear all items
     public void clearAll() {
-        itemBox.removeAll();
+        itemRepo.removeAll();
     }
 }

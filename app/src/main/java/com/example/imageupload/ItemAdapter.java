@@ -31,12 +31,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<Item> items;
     private final Context context;
+    public Box<Item> itemRepo;
 
-    
-    // Spinner options
+    // spinner options
     private final String[] priorities = {"In-Progress", "Completed", "Blocked"};
 
-    public ItemAdapter(Context context, List<Item> items)
+    public ItemAdapter(Context context, List<Item> items, ItemRepo itemRepo)
     {
         this.context = context;
         this.items = items;
@@ -46,7 +46,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         EditText editText;
         CheckBox checkBox;
         Spinner priority_spinner;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -71,53 +70,49 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         Item item = items.get(position);
-        holder.editText.setText(item.getText());
-        // sync checkbox state
-        //holder.checkBox.setChecked(item.isChecked());
 
+        // remove any previous TextWatcher to prevent multiple triggers
+        if (holder.editText.getTag() instanceof TextWatcher) {
+            holder.editText.removeTextChangedListener((TextWatcher) holder.editText.getTag());
+        }
+        holder.editText.setText(item.getText());
+        // implement the TextWatcher callback listener
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int asfter) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // get the content of both the edit text
+                item.setText(s.toString());
+                System.out.println("On Text Changed: " + s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        };
+        holder.editText.addTextChangedListener(textWatcher);
+        // store the watcher in the tag so we can remove it later
+        holder.editText.setTag(textWatcher);
         // listen for checkbox changes
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setChecked(isChecked);
         });
 
-
-        // CREATE AN EDIT TEXT ADAPTER
-        // textWatcher is for watching any changes in editText
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // this function is called before text is edited
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // this function is called after text is edited
-            }
-        };
-
-        holder.editText.addTextChangedListener(textWatcher);
-        // // set the TextChange Listener for
-        //        // the edit text field
-        //
         // make entire item clickable
-//        holder.editText.setOnClickListener(v -> {
-//            // toggle the checkbox
-//            boolean newState = !item.isChecked();
-//            item.setChecked(newState);
-//            holder.checkBox.setChecked(newState);
-//            itemRepo.updateItem(item);
-//        });
+        holder.editText.setOnClickListener(v -> {
+            // toggle the checkbox
+            boolean newState = !item.isChecked();
+            item.setChecked(newState);
+            holder.checkBox.setChecked(newState);
+            itemRepo.put(item);
+        });
         // spinner logic
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
             context,
             R.layout.spinner_layout,
             priorities
-    );
+        );
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
         holder.priority_spinner.setAdapter(spinnerAdapter);
         // set current priority
