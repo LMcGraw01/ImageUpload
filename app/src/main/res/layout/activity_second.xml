@@ -25,6 +25,20 @@
         app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Adding a textview to the right of the calendar but above the tasks for the AI generated summary  -->
+    <TextView
+        android:id="@+id/AITextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="AI Generated Summary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/calendarView"
+        app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- GEORGINA: RecyclerView for "To-Do Today" list on the right of the Calendar -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewToday"
@@ -34,7 +48,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toEndOf="@id/calendarView"
-        app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
+        app:layout_constraintTop_toBottomOf="@id/AITextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/items" />

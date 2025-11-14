@@ -2,6 +2,7 @@ package com.example.imageupload;
 
 import android.os.Bundle;
 import android.widget.CalendarView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ public class SecondActivity extends AppCompatActivity {
     private ItemAdapter adapter; // this adapter binds Item objects to RecyclerView rows
     private List<Item> allItems; // a list to hold every item fetched from the database
     private List<Item> filteredItems = new ArrayList<>(); // a list to hold the items that match the current date on the Calendar
+    private TextView aiSummaryText; // a variable to assist the LLM in generating daily tasks
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,8 @@ public class SecondActivity extends AppCompatActivity {
         allItems = itemRepo.getAllItems();
         // finds the recyclerView in activity_second.xml and assigns it to the variable
         recyclerViewToday = findViewById(R.id.recyclerViewToday);
+        // finds the AI generated text summary view in activity_second.xml
+        aiSummaryText = findViewById(R.id.AITextView);
         // connecting the adapter to the recyclerView
         adapter = new ItemAdapter(this, filteredItems, itemRepo);
         recyclerViewToday.setAdapter(adapter);
@@ -97,5 +101,7 @@ public class SecondActivity extends AppCompatActivity {
             Toast.makeText(this, "No tasks due on this date", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // a method that generates a string summary of what tasks need to be done on a given day 
 
 }
