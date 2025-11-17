@@ -1,6 +1,7 @@
 package com.example.imageupload;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -180,12 +181,16 @@ public class SecondActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new okhttp3.Callback() {
             @Override
             public void onFailure(okhttp3.Call call, IOException e) {
+                // debugging attempts
+                Log.e("AI_REQUEST", "Network error", e);
                 runOnUiThread(() -> aiSummaryText.setText("Error contacting AI server."));
             }
 
             @Override
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    // debugging attempts
+                    Log.e("AI_REQUEST", "Bad response: " + response.code() + " " + response.message());
                     String responseBody = response.body().string();
 
                     try {
