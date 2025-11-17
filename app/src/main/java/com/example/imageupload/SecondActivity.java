@@ -173,7 +173,7 @@ public class SecondActivity extends AppCompatActivity {
         // ^ note that this is a special virtual address created by android emulator since it
         // runs inside of a virtual machine on a diff network
         Request request = new Request.Builder()
-                .url("http://10.0.2.2:5000/summary")
+                .url("http://192.168.1.71:5000/summary")
                 .post(body)
                 .build();
 
@@ -188,10 +188,14 @@ public class SecondActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+
+                Log.e("AI_RESPONSE", "HTTP Status: " + response.code());
+
                 if (response.isSuccessful()) {
                     // debugging attempts
                     Log.e("AI_REQUEST", "Bad response: " + response.code() + " " + response.message());
                     String responseBody = response.body().string();
+                    Log.e("AI_RESPONSE", "Response body: " + responseBody);
 
                     try {
                         JSONObject obj = new JSONObject(responseBody);
@@ -200,6 +204,7 @@ public class SecondActivity extends AppCompatActivity {
                         runOnUiThread(() -> aiSummaryText.setText(summary));
 
                     } catch (Exception ex) {
+                        Log.e("AI_RESPONSE", "JSON parse error", ex);
                         runOnUiThread(() -> aiSummaryText.setText("Invalid AI response."));
                     }
                 } else {

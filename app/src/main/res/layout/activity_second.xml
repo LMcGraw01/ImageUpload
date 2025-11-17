@@ -28,10 +28,11 @@
     <!-- Adding a textview to the right of the calendar but above the tasks for the AI generated summary  -->
     <TextView
         android:id="@+id/AITextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
         android:text="AI Generated Summary"
         android:textSize="20sp"
         android:textStyle="bold"
