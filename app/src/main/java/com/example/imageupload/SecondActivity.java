@@ -56,7 +56,7 @@ public class SecondActivity extends AppCompatActivity {
         // finds the calendarView in activity_second.xml and
         CalendarView calendarView = findViewById(R.id.calendarView);
 
-        // When user selects a certain date, update the list to show items that are due on that date
+        // when user selects a certain date, update the list to show items that are due on that date
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             Calendar selectedDate = Calendar.getInstance();
             selectedDate.set(year, month, dayOfMonth, 0, 0, 0);
@@ -164,8 +164,15 @@ public class SecondActivity extends AppCompatActivity {
 
         // builds the HTTP request
         // this uses my local IP address that pops up when I run the Flask server on my machine
+
+        // use this when connecting to physical device via usbc connection: .url("http://192.168.1.71:5000/summary")
+        // ^ note that both devices need to be on the same wifi network for that to work ^
+
+        // use this when connecting to the emulator built in to android studio: .url("http://10.0.2.2:5000/summary")
+        // ^ note that this is a special virtual address created by android emulator since it
+        // runs inside of a virtual machine on a diff network
         Request request = new Request.Builder()
-                .url("http://192.168.1.71:5000/summary")
+                .url("http://10.0.2.2:5000/summary")
                 .post(body)
                 .build();
 
