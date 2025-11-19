@@ -8,6 +8,7 @@ buildscript {
     val objectboxVersion by extra("5.0.1") // For KTS build scripts
 
     repositories {
+        google()
         mavenCentral()
     }
 

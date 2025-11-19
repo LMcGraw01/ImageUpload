@@ -49,6 +49,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation(libs.activity)
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.github.prolificinteractive:material-calendarview:3.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

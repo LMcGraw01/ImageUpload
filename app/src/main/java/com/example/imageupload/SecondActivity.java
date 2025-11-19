@@ -3,16 +3,21 @@ package com.example.imageupload;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.CalendarView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.imageupload.model.Item;
 import com.example.imageupload.repository.ItemRepo;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -53,6 +58,9 @@ public class SecondActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this, filteredItems, itemRepo);
         recyclerViewToday.setAdapter(adapter);
         recyclerViewToday.setLayoutManager(new LinearLayoutManager(this));
+
+
+        // THIS WORKS FOR STANDARD MONTHLY CALENDAR VIEW
 
         // finds the calendarView in activity_second.xml and
         CalendarView calendarView = findViewById(R.id.calendarView);
@@ -216,7 +224,5 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 }
