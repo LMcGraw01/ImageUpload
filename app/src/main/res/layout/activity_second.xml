@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <!-- GEORGINA: include the second_menu_bar.xml file so that it is linked to this view -->
+    <include
+        android:id="@+id/second_menu_bar"
+        layout="@layout/second_menu_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- GEORGINA: adding a Calendar View to display tasks' due dates  -->
+    <!--CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
+        app:layout_constraintStart_toStartOf="parent" /-->
+
+    <!-- GEORGINA: adding a Dynamic Calendar View (Month and Week) -->
+    <RadioGroup
+        android:id="@+id/viewToggleGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/monthButton"
+            android:text="Month"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/weekButton"
+            android:text="Week" />
+    </RadioGroup>
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:mcv_selectionMode="single"
+        app:mcv_showOtherDates="all"
+        app:mcv_headerVisible="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+    <!-- Adding a textview to the right of the calendar but above the tasks for the AI generated summary  -->
+    <TextView
+        android:id="@+id/AITextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:paddingEnd="20dp"
+        android:text="AI Generated Summary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/calendarView"
+        app:layout_constraintTop_toBottomOf="@id/second_menu_bar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- GEORGINA: RecyclerView for "To-Do Today" list on the right of the Calendar -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewToday"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintStart_toEndOf="@id/calendarView"
+        app:layout_constraintTop_toBottomOf="@id/AITextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/items" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
