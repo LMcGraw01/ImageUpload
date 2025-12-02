@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity
     RecyclerView recyclerView;
     private ItemRepo itemRepo;
 
+
     //GEORGINA: adding a helper method to convert passed in dates to milliseconds from a user
     // readable date to eventually make adding to a Calendar easier
     public static Long dueDate(int year, int month, int day){
@@ -51,17 +52,17 @@ public class MainActivity extends AppCompatActivity
         // only add starter items if database == empty
         if (itemRepo.getAllItems().isEmpty()) {
             // GEORGINA: adding a due date field to the existing objects
-            itemRepo.addItem(new Item("Headset", false, 0, dueDate(2025, 11, 20)));
-            itemRepo.addItem(new Item("PTT", false, 0, dueDate(2025, 11, 21)));
-            itemRepo.addItem(new Item("TAK server running", false, 0, dueDate(2025, 11, 21)));
-            itemRepo.addItem(new Item("USB-C adapter", false, 0, dueDate(2025, 11, 21)));
-            itemRepo.addItem(new Item("Bump helmet", false, 0, dueDate(2025, 11, 22)));
-            itemRepo.addItem(new Item("Ice Cream", false, 0, dueDate(2025, 11, 22)));
-            itemRepo.addItem(new Item("Morty", false, 0, dueDate(2025, 11, 22)));
-            itemRepo.addItem(new Item("Morty Joystick", false, 0, dueDate(2025, 11, 23)));
-            itemRepo.addItem(new Item("Orb", false, 0, dueDate(2025, 11, 25)));
-            itemRepo.addItem(new Item("ASN", false, 0, dueDate(2025, 11, 25)));
-            itemRepo.addItem(new Item("cat", false, 0, dueDate(2025, 11, 25)));
+            itemRepo.addItem(new Item(false, "Headset", "14:30", dueDate(2025, 11, 20)));
+            itemRepo.addItem(new Item( false,"PTT", "15:00", dueDate(2025, 11, 21)));
+            itemRepo.addItem(new Item( false, "TAK server running", "13:00", dueDate(2025, 11, 21)));
+            itemRepo.addItem(new Item( false, "USB-C adapter", "11:00", dueDate(2025, 11, 21)));
+            itemRepo.addItem(new Item( false, "Bump helmet", "17:00", dueDate(2025, 11, 22)));
+            itemRepo.addItem(new Item( false, "Ice Cream","10:00", dueDate(2025, 11, 22)));
+            itemRepo.addItem(new Item( false,"Morty", "9:00", dueDate(2025, 11, 22)));
+            itemRepo.addItem(new Item( false, "Morty Joystick","13:00", dueDate(2025, 11, 23)));
+            itemRepo.addItem(new Item( false,"Orb", "10:30", dueDate(2025, 11, 25)));
+            itemRepo.addItem(new Item(false,"ASN",  "12:00", dueDate(2025, 11, 25)));
+            itemRepo.addItem(new Item( false, "cat","14:00", dueDate(2025, 11, 25)));
         }
 
         // now safely load them
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity
             // once done button is pressed
             // make sure it saves even when exit is pressed
             // create a new item with default text
-            Item newItem = new Item("", false, 0);
+            Item newItem = new Item(false, "", "14:00");
             // edit text needs to go into this
 
             // save to database (returns assigned ID)
@@ -135,6 +136,11 @@ public class MainActivity extends AppCompatActivity
         });
 
         // sanity check
+        // Log.v(); // Verbose
+        // Log.d(); // Debug
+        // Log.i(); // Info
+        // Log.w(); // Warning
+        // Log.e(); // Error
         Log.d("PCC", "Loaded " + items.size() + " items from DB");
 
     } // GEORGINA: end of OnCreate

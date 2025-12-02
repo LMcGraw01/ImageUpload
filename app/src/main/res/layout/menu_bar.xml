@@ -30,8 +30,6 @@
         android:textStyle="bold" />
 
     <!-- save button -->
-
-    <!-- delete button -->
     <Button
         android:id="@+id/action_save"
         android:layout_width="40dp"
@@ -40,6 +38,7 @@
         android:clickable="true"
         android:focusable="true" />
 
+    <!-- delete button -->
     <Button
         android:id="@+id/action_delete"
         android:layout_width="40dp"

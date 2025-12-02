@@ -10,7 +10,7 @@ public class MyApp extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
+         super.onCreate();
 
         // Initialize ObjectBox
         boxStore = MyObjectBox.builder()

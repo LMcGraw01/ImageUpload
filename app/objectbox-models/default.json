@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:1895838788566190752",
-      "lastPropertyId": "5:1643513083700239821",
+      "lastPropertyId": "6:1012238228513800996",
       "name": "Item",
       "properties": [
         {
@@ -25,14 +25,14 @@
           "type": 1
         },
         {
-          "id": "4:4337103693919411158",
-          "name": "priority",
-          "type": 5
-        },
-        {
           "id": "5:1643513083700239821",
           "name": "dueAt",
           "type": 6
+        },
+        {
+          "id": "6:1012238228513800996",
+          "name": "time",
+          "type": 9
         }
       ],
       "relations": []
@@ -46,7 +46,9 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4337103693919411158
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

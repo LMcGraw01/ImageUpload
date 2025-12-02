@@ -1,6 +1,8 @@
 package com.example.imageupload;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.text.Editable;
 import android.util.Log;
@@ -14,7 +16,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TimePicker;
+import android.widget.TimePicker;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.TextView; // GEORGINA: added for dueDate
 
@@ -41,7 +46,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public Box<Item> itemRepo;
 
     // spinner options
-    private final String[] priorities = {"In-Progress", "Completed", "Blocked"};
+    // private final String[] priorities = {"In-Progress", "Completed", "Blocked"};
 
     public ItemAdapter(Context context, List<Item> items, ItemRepo itemRepo)
     {
@@ -54,7 +59,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         EditText editText;
         CheckBox checkBox;
-        Spinner priority_spinner;
+        TextView timeTextView;
+//        Spinner priority_spinner;
         //GEORGINA: adding a field for dueDate
         TextView itemDueDate;
 
@@ -62,7 +68,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             super(itemView);
             editText = itemView.findViewById(R.id.editText);
             checkBox = itemView.findViewById(R.id.checkBox);
-            priority_spinner = itemView.findViewById(R.id.priority_spinner);
+            // time picker
+            timeTextView = itemView.findViewById(R.id.timeTextView);
             // GEORGINA: getting the due date from the id that I defined in items.xml
             itemDueDate = itemView.findViewById(R.id.item_due_date);
         }
@@ -80,9 +87,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     // when checkbox is selected, give user the option to delete
     // always give the user the ability to add new item
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         Item item = items.get(position);
+
+        // Set the time text (or default text if no time set)
+        if (item.getTime() != null && !item.getTime().isEmpty()) {
+            holder.timeTextView.setText(item.getTime());
+        } else {
+            holder.timeTextView.setText("Select Time");
+        }
+
+        // Set click listener for time picker
+        holder.timeTextView.setOnClickListener(v -> {
+            showTimePickerDialog(holder, position);
+        });
 
         // remove any previous TextWatcher to prevent multiple triggers
         if (holder.editText.getTag() instanceof TextWatcher) {
@@ -122,6 +141,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             //item.setDueAt(item.getDueAt());
             itemRepo.put(item);
         });
+
+
 
         // GEORGINA: dueDate logic
         Long dueAtObj = item.getDueAt();   // this may be null
@@ -184,34 +205,68 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
 
         // spinner logic
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
-            context,
-            R.layout.spinner_layout,
-            priorities
-        );
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
-        holder.priority_spinner.setAdapter(spinnerAdapter);
-        // set current priority
-        holder.priority_spinner.setSelection(item.getPriority());
-        // handle Spinner changes
-        holder.priority_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                item.setPriority(pos); // save new priority to item
-                // update ObjectBox
-                Box<Item> box = MyApp.getBoxStore().boxFor(Item.class);
-                box.put(item);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
+//        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+//            context,
+//            R.layout.spinner_layout,
+//            priorities
+//        );
+//        spinnerAdapter.setDropDownViewResource(R.layout.spinner_layout);
+//        holder.priority_spinner.setAdapter(spinnerAdapter);
+//        // set current priority
+//        holder.priority_spinner.setSelection(item.getPriority());
+//        // handle Spinner changes
+//        holder.priority_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+//                item.setPriority(pos); // save new priority to item
+//                // update ObjectBox
+//                Box<Item> box = MyApp.getBoxStore().boxFor(Item.class);
+//                box.put(item);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) { }
+//        });
     }
+
+
 
     @Override
     public int getItemCount()
     {
         return items.size();
+    }
+
+    // time picker logic
+    private void showTimePickerDialog(ViewHolder holder, int position) {
+        // get current time
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // create TimePickerDialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                holder.itemView.getContext(),
+                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                (view, selectedHour, selectedMinute) -> {
+                    // format the selected time
+                    String time = String.format(Locale.getDefault(),
+                            "%02d:%02d", selectedHour, selectedMinute);
+
+                    // update the TextView
+                    holder.timeTextView.setText(time);
+                    Toast.makeText(context, "Time updated!", Toast.LENGTH_SHORT).show();
+
+                    // update the data model
+                    items.get(position).setTime(time);
+                    itemRepo.put(items);
+                },
+                hour,
+                minute,
+                true
+        );
+
+        timePickerDialog.show();
     }
 
     //GEORGINA: helper method to display milliseconds date in human readable format

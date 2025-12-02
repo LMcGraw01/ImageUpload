@@ -134,8 +134,8 @@ public class SecondActivity extends AppCompatActivity {
         StringBuilder summary = new StringBuilder();
         summary.append("Good morning! Today your priorities are:\n");
 
-        // Sort tasks by priority (0 = highest)
-        items.sort(Comparator.comparingInt(Item::getPriority));
+//        // Sort tasks by priority (0 = highest)
+//        items.sort(Comparator.comparingInt(Item::getPriority));
 
         for (Item item : items) {
             summary.append("• ").append(item.getText()).append("\n");
@@ -184,7 +184,8 @@ public class SecondActivity extends AppCompatActivity {
         // runs inside of a virtual machine on a diff network
 
         Request request = new Request.Builder()
-                .url("http://192.168.1.53:5000/summary")
+                // unique IP of laptop
+                .url("http://192.168.1.28:5000/summary")
                 .post(body)
                 .build();
 

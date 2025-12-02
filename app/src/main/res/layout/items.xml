@@ -19,8 +19,6 @@
         android:buttonTint="#FF000000"/>
 
     <!-- edittext -->
-
-    <!-- spinner -->
     <EditText
         android:id="@+id/editText"
         android:layout_width="500dp"
@@ -38,10 +36,27 @@
         app:layout_constraintVertical_bias="0.321"
         android:layout_weight="1"/>
 
-    <Spinner
-        android:id="@+id/priority_spinner"
+    <!-- spinner -->
+<!--    <Spinner-->
+<!--        android:id="@+id/priority_spinner"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content" />-->
+    <!-- timePicker -->
+    <TextView
+        android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Select Time"
+        android:textSize="14sp"
+        android:padding="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:textColor="#FF000000"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- GEORGINA: adding an item due date to the front end display -->
     <TextView
